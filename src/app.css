@@ -1,0 +1,12 @@
+:root {
+  --futuristic-purple: #6946ac; /* main color */
+  --futuristic-purple-pink: #cc83f4; /* secondary color */
+  --futuristic-pink: #fd92f1; /* tertiary color */
+  --futuristic-blue: #67cff7;
+  --futuristic-dark: #1d1d20;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
