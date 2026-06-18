@@ -17,130 +17,121 @@
 
 <header>
 	<a id="logo" href="/">
-		<img src="/favicon/favicon.svg" alt="Demos society logo"/>
+		<img id="logo-img" src="/favicon/favicon.svg" alt="Logo of the organization" />
 		<h2><span id="demos">DEMOS</span><span id="society">SOCIETY</span></h2>
 	</a>
-	<nav id="desktop-view">
+	<nav>
 		<ul>
-			<li>
-				<a href="/">Who we are</a>
-			</li>
-			<li>
-				<a href="/simulation">Play with our simulation</a>
-			</li>
+			<li id="who-are-we"><a href="/">who are we</a></li>
+			<li id="simulation"><a href="/AI/simulation">Play with our simulation</a></li>
 		</ul>
 	</nav>
 	<div id="left-elements">
-		<img src="/icon/flag/en.svg" alt="English flag"/>
+		<div id="lang-container">
+			<img src="/icon/flag/en.svg" alt="English flag" />
+		</div>
+
 	</div>
+
 </header>
+
+
 {@render children()}
 
 <style>
-header {
-	display: flex;
-	align-items: center;
-	background: linear-gradient(to right, var(--futuristic-pink), var(--futuristic-purple) 30%);
-	padding: 0.8rem;
-	height: 6vh;
-	min-height: 25px;
-	width: 100%;
-}
 
-span {
-	margin-left: 0.5rem;
-}
+	:global(body) {
+		font-family: "Exo 2 Variable", sans-serif;
+	}
 
-#demos {
-	color: white;
-}
+	* {
+		color: white;
+	}
 
-#society {
-	color: var(--futuristic-dark);
-}
+	header {
+		width: 100%;
+		height: 10vh;
+		background-color: red;
+		padding: 0.5rem;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
 
-#logo {
-	display: flex;
-	align-items: center;
-	height: 100%;
-	flex: 1;
-}
+	a {
+		text-decoration: none;
+	}
 
-nav {
-	flex: 1;
-	display: flex;
-	justify-content: center;
-}
 
-#left-elements {
-	display: flex;
-	align-items: center;
-	flex-shrink: 0;
-	width: auto;
-	max-width: 50px;
-}
 
-img {
-	height: 100%;
-	max-width: 100%;
-}
+	h2 {
+		margin-left: 1rem;
+	}
 
-#logo {
-	flex: 0 0 auto;
-}
+	nav {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 
-#logo img {
-	transition: transform 0.6s ease;
-	transform-origin: center;
-}
+	ul {
+		display: flex;
+		gap: 3rem;
+	}
 
-#logo img:hover {
-	transform: rotate(360deg);
-}
+	li {
+		list-style: none;
+		font-size: 1.2rem;
+	}
 
-h2 {
-	margin: 0;
-	font-family: "Exo 2 Variable", sans-serif;
-}
+	
 
-ul {
-	margin: 0;
-	display: flex;
-	gap: 2rem;
-}
+	#logo {
+		height: 100%;
+		width: 33%;
+		display: flex;
+		align-items: center;
+		background-color: blue;
+	}
 
-li {
-	list-style: none;
-}
+	
+	#demos {
+		color: var(--futuristic-dark);
+	}
 
-a {
-	text-decoration: none;
-}
+	#society {
+		margin-left: 0.5rem;
+	}
 
-li a {
-	color: white;
-	font-family: "Exo 2 Variable", sans-serif;
-	font-weight: 600;
-	padding:  1.5rem;
-	border-radius: 8px;
-	transition: all 0.25s ease;
-	display: inline-block;
-}
+	img {
+		height: 100%;
+	}
 
-li a:hover {
-	background-color: rgba(255, 255, 255, 0.12);
-	transform: translateY(-2px);
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-}
+	nav {
+		background-color: green;
+		width: 34%;
+		height: 100%;
+	}
 
-#left-elements {
-	text-align: left;
-	height: 100%;
-}
+	#left-elements {
+		background-color: yellow;
+		width: 33%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+	}
 
-@media (max-width: 768px) {
+	#left-elements img:hover {
+		cursor: pointer;
+	}
 
-}
-
+	#lang-container {
+		border-radius: 10px;
+		padding: 0.5rem;
+		background-color: var(--futuristic-dark);
+		height: 100%;
+	}
 
 </style>
