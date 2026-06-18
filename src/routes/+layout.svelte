@@ -27,9 +27,10 @@
 		</ul>
 	</nav>
 	<div id="left-elements">
-		<div id="lang-container">
-			<img src="/icon/flag/en.svg" alt="English flag" />
-		</div>
+		<button id="left-element-container">
+			<img id="lang-flag" src="/icon/flag/en.svg" alt="English flag" />
+			<img id="burger-menu" src="/icon/burger-menu.svg" alt="Burger menu icon"/>
+		</button>
 
 	</div>
 
@@ -51,16 +52,39 @@
 	header {
 		width: 100%;
 		height: 10vh;
-		background-color: red;
 		padding: 0.5rem;
 		width: 100%;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		background: linear-gradient(to right, var(--futuristic-pink), var(--futuristic-purple) 33%);
 	}
 
 	a {
 		text-decoration: none;
+	}
+
+	li {
+		color: white;
+		font-weight: 600;
+		border-radius: 8px;
+		transition: all 0.25s ease;
+		display: inline-block;
+		list-style: none;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	li a {
+		padding:  0.5rem 1rem;
+	}
+
+	li:hover {
+		background-color: rgba(255, 255, 255, 0.12);
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 	}
 
 
@@ -78,22 +102,25 @@
 	ul {
 		display: flex;
 		gap: 3rem;
-	}
-
-	li {
-		list-style: none;
-		font-size: 1.2rem;
-	}
-
-	
+		height: 100%;
+	}	
 
 	#logo {
 		height: 100%;
 		width: 33%;
 		display: flex;
 		align-items: center;
-		background-color: blue;
 	}
+
+	#logo img {
+		transition: transform 0.6s ease;
+		transform-origin: center;
+	}
+
+	#logo img:hover {
+		transform: rotate(360deg);
+	}
+
 
 	
 	#demos {
@@ -109,13 +136,11 @@
 	}
 
 	nav {
-		background-color: green;
 		width: 34%;
 		height: 100%;
 	}
 
 	#left-elements {
-		background-color: yellow;
 		width: 33%;
 		height: 100%;
 		display: flex;
@@ -123,15 +148,38 @@
 		justify-content: flex-end;
 	}
 
-	#left-elements img:hover {
-		cursor: pointer;
+	
+
+	#left-element-container {
+		border-radius: 10px;
+		height: 100%;
+		padding: 0.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
-	#lang-container {
-		border-radius: 10px;
-		padding: 0.5rem;
-		background-color: var(--futuristic-dark);
-		height: 100%;
+	#left-element-container:hover {
+		background-color: rgba(255, 255, 255, 0.12);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+	}
+
+	#burger-menu {
+		display: none;
+	}
+
+	@media (max-width: 1000px) {
+		nav {
+			display: none;
+		}
+
+		#lang-flag {
+			display: none;
+		}
+
+		#burger-menu {
+			display: block;
+		}
 	}
 
 </style>
