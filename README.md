@@ -15,7 +15,7 @@ To recreate this project with the same configuration:
 
 ```sh
 # recreate this project
-npx sv@0.16.1 create --template minimal --types ts --install npm demos-society
+npx sv@0.16.1 create --template minimal --types ts --install npm demos-AI
 ```
 
 ## Developing
