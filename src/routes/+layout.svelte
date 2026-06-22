@@ -39,7 +39,7 @@
 	let { children } = $props();
 </script>
 
-<header>
+<header onmousedown={handleClickOutside}>
 	<a id="logo" href="/">
 		<img
 			id="logo-img"
@@ -208,6 +208,7 @@
 		width: 33%;
 		display: flex;
 		align-items: center;
+		min-width: 150px;
 	}
 
 	#logo img {
@@ -310,6 +311,20 @@
 	}
 
 	@media (max-width: 1000px) {
+		header {
+			padding: 0.5rem 0.25rem;
+		}
+
+		#logo {
+			width: auto;
+			flex: 1;
+			min-width: auto;
+		}
+
+		h2 {
+			display: none;
+		}
+
 		nav {
 			display: none;
 		}
