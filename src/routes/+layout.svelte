@@ -6,17 +6,16 @@
 	import * as m from '$lib/paraglide/messages';
 	import { clickOutside } from '$lib/actions/clickOutside';
 
-
 	// @ts-ignore
-	import "@fontsource-variable/exo-2";
+	import '@fontsource-variable/exo-2';
 
-	import { slide } from "svelte/transition";
+	import { slide } from 'svelte/transition';
 
 	let burgerMenuOpen = $state(false);
 	let langMenuOpen = $state(false);
 
 	let toggleBurgerMenu = () => {
-		console.log("fils de pute");
+		console.log('fils de pute');
 		burgerMenuOpen = !burgerMenuOpen;
 	};
 
@@ -32,20 +31,16 @@
 		{ code: 'es', name: 'Español' },
 		{ code: 'fr', name: 'Français' },
 		{ code: 'ru', name: 'Русский' }
-	] as const;	
+	] as const;
 
 	console.log(getLocale());
 
 	let { children } = $props();
 </script>
 
-<header onmousedown={handleClickOutside}>
+<header>
 	<a id="logo" href="/">
-		<img
-			id="logo-img"
-			src="/favicon/favicon.svg"
-			alt="Logo of the organization"
-		/>
+		<img id="logo-img" src="/favicon/favicon.svg" alt="Logo of the organization" />
 
 		<h2>
 			<span id="demos">DEMOS</span>
@@ -61,30 +56,20 @@
 	</nav>
 
 	<div id="left-elements">
-		<div id="lang-dropdown" use:clickOutside={() => langMenuOpen = false}>
-			<button
-				class="left-btn"
-				id="lang-flag-btn"
-				onclick={toggleLangMenu}
-			>
-				<img
-					id="lang-flag"
-					src="/icon/flag/{getLocale()}.svg"
-					alt="English flag"
-				/>
+		<div id="lang-dropdown" use:clickOutside={() => (langMenuOpen = false)}>
+			<button class="left-btn" id="lang-flag-btn" onclick={toggleLangMenu}>
+				<img id="lang-flag" src="/icon/flag/{getLocale()}.svg" alt="English flag" />
 			</button>
 
 			{#if langMenuOpen}
-				<div
-					id="lang-menu"
-					transition:slide={{ duration: 300 }}
-				>
+				<div id="lang-menu" transition:slide={{ duration: 300 }}>
 					{#each languages as lang}
-						<a data-sveltekit-reload class="lang-option" href={resolve(localizeHref(page.url.pathname, { locale: lang.code }) as Pathname)}>
-							<img
-								src="/icon/flag/{lang.code}.svg"
-								alt="{lang.name} flag"
-							/>
+						<a
+							data-sveltekit-reload
+							class="lang-option"
+							href={resolve(localizeHref(page.url.pathname, { locale: lang.code }) as Pathname)}
+						>
+							<img src="/icon/flag/{lang.code}.svg" alt="{lang.name} flag" />
 
 							<span>{lang.name}</span>
 						</a>
@@ -93,16 +78,8 @@
 			{/if}
 		</div>
 
-		<button
-			class="left-btn"
-			id="burger-menu-btn"
-			onclick={toggleBurgerMenu}
-		>
-			<img
-				id="burger-menu"
-				src="/icon/burger-menu.svg"
-				alt="Burger menu icon"
-			/>
+		<button class="left-btn" id="burger-menu-btn" onclick={toggleBurgerMenu}>
+			<img id="burger-menu" src="/icon/burger-menu.svg" alt="Burger menu icon" />
 		</button>
 	</div>
 </header>
@@ -119,7 +96,7 @@
 	}
 
 	:global(body) {
-		font-family: "Exo 2 Variable", sans-serif;
+		font-family: 'Exo 2 Variable', sans-serif;
 		margin: 0;
 	}
 
@@ -145,7 +122,7 @@
 		position: relative;
 	}
 
-	:global([dir="rtl"]) header {
+	:global([dir='rtl']) header {
 		background: linear-gradient(to left, var(--futuristic-pink), var(--futuristic-purple) 33%);
 	}
 
@@ -187,7 +164,7 @@
 		display: flex;
 	}
 
-	:global([dir="rtl"]) h2 {
+	:global([dir='rtl']) h2 {
 		direction: ltr;
 	}
 
@@ -319,10 +296,6 @@
 			width: auto;
 			flex: 1;
 			min-width: auto;
-		}
-
-		h2 {
-			display: none;
 		}
 
 		nav {
