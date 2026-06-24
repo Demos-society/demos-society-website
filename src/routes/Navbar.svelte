@@ -53,51 +53,52 @@
 	] as const;
 
 	console.log(getLocale());
-	console.log(ligthMode);
 </script>
 
-		{#if !(burgerMenuOpen && onTheHeader)}
-			<nav>
-				<ul>
-					<li id="who-are-we"><a href="/">{m.nav_who_are_we()}</a></li>
-					<li id="simulation"><a href="/AI/simulation">{m.nav_simulation()}</a></li>
-				</ul>
-			</nav>
-		{/if}
+{#if !(burgerMenuOpen && onTheHeader)}
+	<nav class={onTheHeader ? 'onTheHeader' : 'notOnTheHeader'}>
+		<ul>
+			<li id="who-are-we"><a href="/" onclick={toggleBurgerMenu}>{m.nav_who_are_we()}</a></li>
+			<li id="simulation">
+				<a href="/AI/simulation" onclick={toggleBurgerMenu}>{m.nav_simulation()}</a>
+			</li>
+		</ul>
+	</nav>
+{/if}
 
-			<div class="left-elements">
-				{#if !(burgerMenuOpen && onTheHeader)}
-					<div id="lang-dropdown" use:clickOutside={() => (langMenuOpen = false)}>
-						<button class="left-btn" id="lang-flag-btn" onclick={toggleLangMenu}>
-							<img id="lang-flag" src="/icon/flag/{getLocale()}.svg" alt="English flag" />
-						</button>
+<div class="left-elements {onTheHeader ? 'onTheHeader' : 'notOnTheHeader'}">
+	{#if !(burgerMenuOpen && onTheHeader)}
+		<div id="lang-dropdown" use:clickOutside={() => (langMenuOpen = false)}>
+			<button class="left-btn" id="lang-flag-btn" onclick={toggleLangMenu}>
+				<img id="lang-flag" src="/icon/flag/{getLocale()}.svg" alt="English flag" />
+			</button>
 
-						{#if langMenuOpen}
-							<div id="lang-menu" transition:slide={{ duration: 300 }}>
-								{#each languages as lang}
-									<a
-										data-sveltekit-reload
-										class="lang-option"
-										href={resolve(localizeHref(page.url.pathname, { locale: lang.code }) as Pathname)}
-									>
-										<img src="/icon/flag/{lang.code}.svg" alt="{lang.name} flag" />
+			{#if langMenuOpen}
+				<div id="lang-menu" transition:slide={{ duration: 300 }}>
+					{#each languages as lang}
+						<a
+							data-sveltekit-reload
+							class="lang-option"
+							href={resolve(localizeHref(page.url.pathname, { locale: lang.code }) as Pathname)}
+						>
+							<img src="/icon/flag/{lang.code}.svg" alt="{lang.name} flag" />
 
-										<span>{lang.name}</span>
-									</a>
-								{/each}
-							</div>
-						{/if}
-					</div>
-					<button class="left-btn" id="light-mode" onclick={toggleLigthMode}>
-						<img src="/icon/{ligthMode ? 'dark' : 'light'}-mode.svg" alt="change the color theme" />
-					</button>
-				{/if}
-				{#if onTheHeader}
-					<button class="left-btn" id="burger-menu-btn" onclick={toggleBurgerMenu}>
-						<img id="burger-menu" src="/icon/burger-menu.svg" alt="Burger menu icon" />
-					</button>
-				{/if}
+							<span>{lang.name}</span>
+						</a>
+					{/each}
+				</div>
+			{/if}
 		</div>
+		<button class="left-btn" id="light-mode" onclick={toggleLigthMode}>
+			<img src="/icon/{ligthMode ? 'dark' : 'light'}-mode.svg" alt="change the color theme" />
+		</button>
+	{/if}
+	{#if onTheHeader}
+		<button class="left-btn" id="burger-menu-btn" onclick={toggleBurgerMenu}>
+			<img id="burger-menu" src="/icon/burger-menu.svg" alt="Burger menu icon" />
+		</button>
+	{/if}
+</div>
 
 <style>
 	:global(body) {
@@ -134,10 +135,13 @@
 		transition: all 0.25s ease;
 		display: inline-block;
 		list-style: none;
-		height: 100%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+
+	nav.onTheHeader li {
+		height: 100%;
 	}
 
 	li a {
@@ -159,6 +163,9 @@
 	ul {
 		display: flex;
 		gap: 3rem;
+	}
+
+	nav.onTheHeader ul {
 		height: 100%;
 	}
 
@@ -166,7 +173,7 @@
 		height: 100%;
 	}
 
-	nav {
+	nav.onTheHeader {
 		width: 34%;
 		height: 100%;
 	}
@@ -176,8 +183,11 @@
 		display: flex;
 		align-items: center;
 		justify-content: flex-end;
-		height: 100%;
 		gap: 1rem;
+	}
+
+	.left-elements.onTheHeader {
+		height: 100%;
 	}
 
 	.left-btn {
@@ -249,10 +259,10 @@
 	}
 
 	@media (max-width: 1000px) {
-		nav {
+		nav.onTheHeader {
 			display: none;
 		}
-		#lang-flag-btn {
+		.left-elements.onTheHeader #lang-flag-btn {
 			display: none;
 		}
 		#burger-menu-btn {
@@ -261,8 +271,48 @@
 		.left-elements {
 			padding: 0;
 		}
-		#light-mode {
+		.left-elements.onTheHeader #light-mode {
 			display: none;
+		}
+
+		nav.notOnTheHeader {
+			width: 100%;
+			padding: 0 1rem;
+		}
+
+		nav.notOnTheHeader ul {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			padding: 0;
+		}
+
+		nav.notOnTheHeader ul {
+			width: 100%;
+		}
+
+		nav.notOnTheHeader a {
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			height: 3rem;
+		}
+
+		.left-elements.notOnTheHeader {
+			width: 100%;
+			height: 8%;
+			flex-direction: row-reverse;
+			margin-bottom: 40%;
+		}
+
+		.left-elements.notOnTheHeader .left-btn {
+			background-color: var(--futuristic-purple-pink);
+		}
+
+		.left-elements.notOnTheHeader #lang-menu {
+			background-color: var(--futuristic-purple-pink);
 		}
 	}
 </style>

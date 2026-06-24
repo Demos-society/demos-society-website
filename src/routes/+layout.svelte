@@ -7,24 +7,41 @@
 		burgerMenuOpen = !burgerMenuOpen;
 	};
 
+	$effect(() => {
+		const media = window.matchMedia('(min-width: 1000px)');
+
+		const handleChange = (e: MediaQueryListEvent) => {
+			if (e.matches) {
+				burgerMenuOpen = false;
+			}
+		};
+
+		media.addEventListener('change', handleChange);
+
+		return () => media.removeEventListener('change', handleChange);
+	});
+
 	let { children } = $props();
 </script>
 
 <header>
-	<a id="logo" href="/">
-		<img id="logo-img" src="/favicon/favicon.svg" alt="Logo of the organization" />
+	<div id="logo-container">
+		<a id="logo" href="/">
+			<img id="logo-img" src="/favicon/favicon.svg" alt="Logo of the organization" />
 
-		<h2>
-			<span id="demos">DEMOS</span>
-			<span id="AI">AI</span>
-		</h2>
-	</a>
+			<h2>
+				<span id="demos">DEMOS</span>
+				<span id="AI">AI</span>
+			</h2>
+		</a>
+	</div>
 	<Navbar {toggleBurgerMenu} {burgerMenuOpen} onTheHeader={true} />
 </header>
 {#if burgerMenuOpen}
 	<div id="slider-container">
 		<Navbar {toggleBurgerMenu} {burgerMenuOpen} onTheHeader={false} />
 	</div>
+	<button id="close-btn" onclick={toggleBurgerMenu} aria-label="close menu"></button>
 {/if}
 
 {@render children()}
@@ -62,7 +79,8 @@
 		align-items: center;
 		justify-content: space-between;
 		background: linear-gradient(to right, var(--futuristic-pink), var(--futuristic-purple) 33%);
-		position: relative;
+		position: sticky;
+		z-index: 100;
 	}
 
 	:global([dir='rtl']) header {
@@ -84,10 +102,15 @@
 
 	#logo {
 		height: 100%;
-		width: 33%;
+		width: fit-content;
 		display: flex;
 		align-items: center;
 		min-width: 150px;
+	}
+
+	#logo-container {
+		height: 100%;
+		width: 33%;
 	}
 
 	#logo img {
@@ -115,6 +138,10 @@
 		display: none;
 	}
 
+	#close-btn {
+		display: none;
+	}
+
 	@media (max-width: 1000px) {
 		header {
 			padding: 0.5rem 0.25rem;
@@ -126,15 +153,26 @@
 			min-width: auto;
 		}
 
-	    #slider-container {
+		#slider-container {
 			height: 90vh;
-			width: 100%;
+			width: 300px;
 			display: flex;
-			flex-direction: column;
-			position: absolute;
-			z-index: 10;
-			
+			flex-direction: column-reverse;
+			justify-content: flex-end;
+			position: fixed;
+			z-index: 100;
 			background: var(--futuristic-purple);
+			right: 0;
+			padding: 1rem;
+		}
+
+		#close-btn {
+			height: 100%;
+			width: 100%;
+			display: block;
+			position: fixed;
+			z-index: 10;
+			background: rgba(0, 0, 0, 0.5);
 		}
 	}
 </style>
