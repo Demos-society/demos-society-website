@@ -1,89 +1,48 @@
 <script lang="ts">
-	import './layout.css';
-	import type { Pathname } from '$app/types';
-	import { resolve } from '$app/paths';
-	import { page } from '$app/state';
-	import { locales, localizeHref, getLocale } from '$lib/paraglide/runtime';
-	import * as m from '$lib/paraglide/messages';
-	import { clickOutside } from '$lib/actions/clickOutside';
-
-	// @ts-ignore
-	import '@fontsource-variable/exo-2';
-
-	import { slide } from 'svelte/transition';
+	import Navbar from './Navbar.svelte';
 
 	let burgerMenuOpen = $state(false);
-	let langMenuOpen = $state(false);
 
 	let toggleBurgerMenu = () => {
-		console.log('fils de pute');
 		burgerMenuOpen = !burgerMenuOpen;
 	};
 
-	let toggleLangMenu = () => {
-		langMenuOpen = !langMenuOpen;
-	};
+	$effect(() => {
+		const media = window.matchMedia('(min-width: 1000px)');
 
-	const languages = [
-		{ code: 'ar', name: 'العربية' },
-		{ code: 'ch', name: '中文' },
-		{ code: 'de', name: 'Deutsch' },
-		{ code: 'en', name: 'English' },
-		{ code: 'es', name: 'Español' },
-		{ code: 'fr', name: 'Français' },
-		{ code: 'ru', name: 'Русский' }
-	] as const;
+		const handleChange = (e: MediaQueryListEvent) => {
+			if (e.matches) {
+				burgerMenuOpen = false;
+			}
+		};
 
-	console.log(getLocale());
+		media.addEventListener('change', handleChange);
+
+		return () => media.removeEventListener('change', handleChange);
+	});
 
 	let { children } = $props();
 </script>
 
-<header class="w-full h-[10vh] p-2 flex items-center justify-between bg-gradient-to-r from-[var(--futuristic-pink)] via-[var(--futuristic-purple-pink)] to-[var(--futuristic-purple)] relative [&[dir='rtl']]:bg-gradient-to-l max-md:p-1">
-	<a id="logo" href="/" class="h-full flex items-center min-w-[150px] w-1/3 max-md:w-auto max-md:flex-1 max-md:min-w-0">
-		<img id="logo-img" src="/favicon/favicon.svg" alt="Logo of the organization" class="h-full" />
+<header>
+	<div id="logo-container">
+		<a id="logo" href="/">
+			<img id="logo-img" src="/favicon/favicon.svg" alt="Logo of the organization" />
 
-		<h2 class="m-0 ms-4 flex [&[dir='rtl']]:direction-ltr">
-			<span id="demos" class="text-[var(--futuristic-dark)]">DEMOS</span>
-			<span id="AI" class="mx-2 text-white">AI</span>
-		</h2>
-	</a>
-
-	<nav class="flex items-center justify-center w-[34%] h-full max-md:hidden">
-		<ul class="flex gap-12 h-full">
-			<li id="who-are-we" class="text-white font-semibold rounded-lg transition-all duration-250 inline-block list-none h-full flex items-center justify-center hover:bg-white/12 hover:-translate-y-0.5 hover:shadow-lg"><a href="/" class="px-4 py-2">{m.nav_who_are_we()}</a></li>
-			<li id="simulation" class="text-white font-semibold rounded-lg transition-all duration-250 inline-block list-none h-full flex items-center justify-center hover:bg-white/12 hover:-translate-y-0.5 hover:shadow-lg"><a href="/AI/simulation" class="px-4 py-2">{m.nav_simulation()}</a></li>
-		</ul>
-	</nav>
-
-	<div id="left-elements" class="flex gap-4 w-1/3 items-center justify-end pe-16 h-full max-md:w-auto max-md:pe-0">
-		<div id="lang-dropdown" use:clickOutside={() => (langMenuOpen = false)} class="relative h-full max-md:hidden">
-			<button class="left-btn p-2 border-none outline-none bg-none rounded-lg h-full px-2 flex items-center justify-center bg-[var(--futuristic-purple)] hover:bg-white/12 hover:shadow-lg cursor-pointer transition-all" id="lang-flag-btn" onclick={toggleLangMenu}>
-				<img id="lang-flag" src="/icon/flag/{getLocale()}.svg" alt="English flag" />
-			</button>
-
-			{#if langMenuOpen}
-				<div id="lang-menu" transition:slide={{ duration: 300 }} class="absolute top-[calc(100%+0.5rem)] right-0 w-40 bg-[var(--futuristic-purple)] rounded-lg p-4 shadow-2xl z-[1000] flex flex-col gap-2 left-1/2 -translate-x-1/2">
-					{#each languages as lang}
-						<a
-							data-sveltekit-reload
-							class="lang-option w-full flex items-center gap-2 cursor-pointer transition-all rounded px-2 py-2 hover:bg-white/15 hover:-translate-x-1"
-							href={resolve(localizeHref(page.url.pathname, { locale: lang.code }) as Pathname)}
-						>
-							<img src="/icon/flag/{lang.code}.svg" alt="{lang.name} flag" class="h-8" />
-
-							<span>{lang.name}</span>
-						</a>
-					{/each}
-				</div>
-			{/if}
-		</div>
-
-		<button class="left-btn p-2 border-none outline-none bg-none rounded-lg h-full px-2 flex items-center justify-center bg-[var(--futuristic-purple)] hover:bg-white/12 hover:shadow-lg cursor-pointer transition-all max-md:block hidden" id="burger-menu-btn" onclick={toggleBurgerMenu}>
-			<img id="burger-menu" src="/icon/burger-menu.svg" alt="Burger menu icon" />
-		</button>
+			<h2>
+				<span id="demos">DEMOS</span>
+				<span id="AI">AI</span>
+			</h2>
+		</a>
 	</div>
+	<Navbar {toggleBurgerMenu} {burgerMenuOpen} onTheHeader={true} />
 </header>
+{#if burgerMenuOpen}
+	<div id="slider-container">
+		<Navbar {toggleBurgerMenu} {burgerMenuOpen} onTheHeader={false} />
+	</div>
+	<button id="close-btn" onclick={toggleBurgerMenu} aria-label="close menu"></button>
+{/if}
 
 {@render children()}
 
@@ -111,14 +70,47 @@
 		color: white;
 	}
 
+	header {
+		width: 100%;
+		height: 10vh;
+		padding: 0.5rem;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		background: linear-gradient(to right, var(--futuristic-pink), var(--futuristic-purple) 33%);
+		position: sticky;
+		z-index: 100;
+	}
+
+	:global([dir='rtl']) header {
+		background: linear-gradient(to left, var(--futuristic-pink), var(--futuristic-purple) 33%);
+	}
+
 	a {
 		text-decoration: none;
 	}
 
-	button {
-		border: none;
-		outline: none;
-		background: none;
+	h2 {
+		margin: 0 1rem;
+		display: flex;
+	}
+
+	:global([dir='rtl']) h2 {
+		direction: ltr;
+	}
+
+	#logo {
+		height: 100%;
+		width: fit-content;
+		display: flex;
+		align-items: center;
+		min-width: 150px;
+	}
+
+	#logo-container {
+		height: 100%;
+		width: 33%;
 	}
 
 	#logo img {
@@ -128,5 +120,59 @@
 
 	#logo img:hover {
 		transform: rotate(360deg);
+	}
+
+	#demos {
+		color: var(--futuristic-dark);
+	}
+
+	#AI {
+		margin: 0 0.5rem;
+	}
+
+	img {
+		height: 100%;
+	}
+
+	#slider-container {
+		display: none;
+	}
+
+	#close-btn {
+		display: none;
+	}
+
+	@media (max-width: 1000px) {
+		header {
+			padding: 0.5rem 0.25rem;
+		}
+
+		#logo {
+			width: auto;
+			flex: 1;
+			min-width: auto;
+		}
+
+		#slider-container {
+			height: 90vh;
+			width: 300px;
+			display: flex;
+			flex-direction: column-reverse;
+			justify-content: flex-end;
+			position: fixed;
+			z-index: 100;
+			background: var(--futuristic-purple);
+			right: 0;
+			padding: 1rem;
+		}
+
+		#close-btn {
+			height: 100%;
+			width: 100%;
+			display: block;
+			position: fixed;
+			z-index: 10;
+			background: rgba(0, 0, 0, 0.5);
+		}
 	}
 </style>
