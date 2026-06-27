@@ -1,5 +1,7 @@
 <script lang="ts">
 	import Navbar from './Navbar.svelte';
+	// @ts-ignore
+	import '@fontsource-variable/exo-2';
 
 	let burgerMenuOpen = $state(false);
 
@@ -48,6 +50,7 @@
 
 <style>
 	:global(:root) {
+		--futuristic-dark-purple: #3c245f;
 		--futuristic-purple: #6946ac;
 		--futuristic-purple-pink: #cc83f4;
 		--futuristic-pink: #fd92f1;

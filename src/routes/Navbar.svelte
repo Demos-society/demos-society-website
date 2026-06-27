@@ -6,9 +6,6 @@
 	import * as m from '$lib/paraglide/messages';
 	import { clickOutside } from '$lib/actions/clickOutside';
 
-	// @ts-ignore
-	import '@fontsource-variable/exo-2';
-
 	import { slide } from 'svelte/transition';
 	import { MediaQuery } from 'svelte/reactivity';
 
