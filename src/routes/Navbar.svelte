@@ -11,33 +11,17 @@
 
 	let langMenuOpen = $state(false);
 	import { browser } from '$app/environment';
+	import { theme } from '$lib/stores/theme';
 
-	let ligthMode = $state(false);
-
-	$effect(() => {
-		if (!browser) return;
-
-		const saved = localStorage.getItem('theme');
-
-		ligthMode = saved
-			? saved === 'light'
-			: window.matchMedia('(prefers-color-scheme: light)').matches;
-	});
-
-	let toggleLigthMode = () => {
-		ligthMode = !ligthMode;
-		localStorage.setItem('theme', ligthMode ? 'light' : 'dark');
-	};
+	function toggleLigthMode() {
+		theme.update((t) => (t === 'dark' ? 'light' : 'dark'));
+	}
 
 	let { toggleBurgerMenu, onTheHeader, burgerMenuOpen } = $props();
 
 	let toggleLangMenu = () => {
 		langMenuOpen = !langMenuOpen;
 	};
-
-	$effect(() => {
-		document.body.classList.toggle('light-mode', ligthMode);
-	});
 
 	const languages = [
 		{ code: 'ar', name: 'العربية' },
@@ -50,6 +34,7 @@
 	] as const;
 
 	console.log(getLocale());
+	console.log($theme);
 </script>
 
 {#if !(burgerMenuOpen && onTheHeader)}
@@ -87,7 +72,7 @@
 			{/if}
 		</div>
 		<button class="left-btn" id="light-mode" onclick={toggleLigthMode}>
-			<img src="/icon/{ligthMode ? 'dark' : 'light'}-mode.svg" alt="change the color theme" />
+			<img src="/icon/{$theme}-mode.svg" alt="change the color theme" />
 		</button>
 	{/if}
 	{#if onTheHeader}

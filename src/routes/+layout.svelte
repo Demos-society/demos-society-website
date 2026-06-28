@@ -2,6 +2,8 @@
 	import Navbar from './Navbar.svelte';
 	// @ts-ignore
 	import '@fontsource-variable/exo-2';
+	import { browser } from '$app/environment';
+	import { theme } from '$lib/stores/theme';
 
 	let burgerMenuOpen = $state(false);
 
@@ -21,6 +23,26 @@
 		media.addEventListener('change', handleChange);
 
 		return () => media.removeEventListener('change', handleChange);
+	});
+
+	$effect(() => {
+		if (browser) {
+			const saved = localStorage.getItem('theme');
+
+			const initial: 'light' | 'dark' =
+				saved === 'light' || saved === 'dark'
+					? saved
+					: window.matchMedia('(prefers-color-scheme: dark)').matches
+						? 'dark'
+						: 'light';
+			theme.set(initial);
+		}
+
+		theme.subscribe((value) => {
+			if (!browser) return;
+			localStorage.setItem('theme', value);
+			document.documentElement.dataset.theme = value;
+		});
 	});
 
 	let { children } = $props();
