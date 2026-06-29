@@ -296,5 +296,9 @@
 		.left-elements.notOnTheHeader #lang-menu {
 			background-color: var(--futuristic-purple-pink);
 		}
+
+		ul li {
+			background-color: var(--futuristic-purple-pink);
+		}
 	}
 </style>

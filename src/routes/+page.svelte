@@ -16,6 +16,7 @@
 	let index = 0;
 	let running = true;
 	let timeToSleep = 3000;
+	let reflectionTime = 750;
 
 	function sleep(ms: number) {
 		return new Promise((r) => setTimeout(r, ms));
@@ -57,10 +58,12 @@
 				await type(base + phrase);
 				await sleep(timeToSleep);
 				await eraseToBase();
+				await sleep(reflectionTime);
 			} else if (!isLast) {
 				await type(phrase);
 				await sleep(timeToSleep);
 				await eraseToBase();
+				await sleep(reflectionTime);
 			} else {
 				await type(phrase);
 				await sleep(timeToSleep);
@@ -105,10 +108,6 @@
 		position: relative;
 	}
 
-	#slogan.light {
-		background-color: #ffffff3c;
-	}
-
 	/* layout principal */
 	.container {
 		display: flex;
@@ -134,8 +133,6 @@
 
 		/* Hauteur fixe = 2 lignes max */
 		min-height: 2lh; /* 2 × line-height */
-
-		
 	}
 
 	/* image ronde */
@@ -171,6 +168,27 @@
 	@keyframes blink {
 		50% {
 			opacity: 0;
+		}
+	}
+
+	@media (orientation: portrait) {
+		.container {
+			justify-content: center;
+			padding: 1rem;
+		}
+
+		.image {
+			position: absolute;
+		}
+
+		.image img {
+			height: 95vw;
+			width: 95vw;
+		}
+
+		.text {
+			align-items: center;
+			justify-content: center;
 		}
 	}
 </style>
