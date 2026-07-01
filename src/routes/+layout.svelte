@@ -85,6 +85,10 @@
 		margin: 0;
 	}
 
+	:global(a) {
+		color: var(--futuristic-purple-pink);
+	}
+
 	:global(*),
 	:global(*::before),
 	:global(*::after) {

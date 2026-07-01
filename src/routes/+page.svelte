@@ -1,117 +1,91 @@
 <script lang="ts">
 	import Slogan from './Slogan.svelte';
 	import { theme } from '$lib/stores/theme';
-	import { fade } from 'svelte/transition';
-	import { onMount } from 'svelte';
-
-	let visible = $state(false);
-	let section: HTMLElement | null = null;
-
-	onMount(() => {
-		if (!section) return;
-
-		const observer = new IntersectionObserver(
-			([entry]) => {
-				if (entry.isIntersecting) {
-					visible = true;
-					observer.disconnect();
-				}
-			},
-			{ threshold: 0.5 }
-		);
-
-		observer.observe(section);
-
-		return () => observer.disconnect();
-	});
+	import { reveal } from '$lib/actions/reveal';
 </script>
 
 <Slogan></Slogan>
 
-<div class="container {$theme}" id="public-interest" bind:this={section}>
-	{#if visible}
-		<h2 transition:fade>Pour que l'IA soit bénéfique à l'humanité</h2>
-		<div class="text-img" transition:fade>
-			<div class="text">
-				<p>
-					Chez Demos IA, nous pensons que l'intelligence artificielle n'est ni bonne ni mauvaise en
-					elle-même. Comme toute technologie, son impact dépend des choix que nous faisons quant à
-					son développement et à son utilisation.
-				</p>
+<div class="container {$theme} reveal" id="public-interest" use:reveal>
+	<h2>Pour que l'IA soit bénéfique à l'humanité</h2>
+	<div class="text-img">
+		<div class="text">
+			<p>
+				Chez Demos IA, nous pensons que l'intelligence artificielle n'est ni bonne ni mauvaise en
+				elle-même. Comme toute technologie, son impact dépend des choix que nous faisons quant à son
+				développement et à son utilisation.
+			</p>
 
-				<p>
-					L'IA transforme déjà notre société de manière positive. En médecine, elle accélère la
-					découverte de nouveaux traitements et ouvre la voie à des thérapies pour des maladies
-					jusqu'ici considérées comme incurables. Dans le domaine scientifique, elle permet aux
-					chercheurs d'effectuer des découvertes plus rapidement et d'améliorer notre compréhension
-					du monde. À plus long terme, elle pourrait également accroître considérablement la
-					productivité de notre économie, réduisant le temps de travail nécessaire pour produire les
-					biens et services dont nous avons besoin et offrant à chacun davantage de temps libre.
-				</p>
+			<p>
+				L'IA transforme déjà notre société de manière positive. En médecine, elle accélère la
+				découverte de nouveaux traitements et ouvre la voie à des thérapies pour des maladies
+				jusqu'ici considérées comme incurables. Dans le domaine scientifique, elle permet aux
+				chercheurs d'effectuer des découvertes plus rapidement et d'améliorer notre compréhension du
+				monde. À plus long terme, elle pourrait également accroître considérablement la productivité
+				de notre économie, réduisant le temps de travail nécessaire pour produire les biens et
+				services dont nous avons besoin et offrant à chacun davantage de temps libre.
+			</p>
 
-				<p>
-					Mais l'intelligence artificielle représente également des risques majeurs. Elle pourrait
-					concentrer un pouvoir économique et technologique sans précédent entre les mains d'un
-					petit nombre d'acteurs, accroître les inégalités en remplaçant de nombreux emplois,
-					renforcer les capacités de surveillance des États et des entreprises, faciliter le
-					développement d'armes autonomes capables de prendre des décisions létales sans
-					intervention humaine, accélérer la conception d'agents biologiques dangereux ou encore
-					rendre les cyberattaques plus puissantes en compromettant des infrastructures critiques.
-				</p>
-				<p>
-					La mission de Demos IA est donc simple, faire en sorte que le développement de
-					l'intelligence artificielle bénéficie au plus grand nombre et serve l'intérêt général, en
-					maximisant ses aspect positif et en minimisant ses aspect negatif.
-				</p>
-			</div>
-			<hr />
-			<div class="img-container">
-				<img src="/mutual-help.svg" alt="Mutual help symbol" />
-			</div>
+			<p>
+				Mais l'intelligence artificielle représente également des risques majeurs. Elle pourrait
+				concentrer un pouvoir économique et technologique sans précédent entre les mains d'un petit
+				nombre d'acteurs, accroître les inégalités en remplaçant de nombreux emplois, renforcer les
+				capacités de surveillance des États et des entreprises, faciliter le développement d'armes
+				autonomes capables de prendre des décisions létales sans intervention humaine, accélérer la
+				conception d'agents biologiques dangereux ou encore rendre les cyberattaques plus puissantes
+				en compromettant des infrastructures critiques.
+			</p>
+			<p>
+				La mission de Demos IA est donc simple, faire en sorte que le développement de
+				l'intelligence artificielle bénéficie au plus grand nombre et serve l'intérêt général, en
+				maximisant ses aspect positif et en minimisant ses aspect negatif.
+			</p>
 		</div>
-	{/if}
+		<hr />
+		<div class="img-container">
+			<img src="/mutual-help.svg" alt="Mutual help symbol" />
+		</div>
+	</div>
 </div>
 
-<div class="container {$theme}" id="democracy" bind:this={section}>
-	{#if visible}
-		<h2 transition:fade>Pour une IA démocratique</h2>
-		<div class="text-img" transition:fade>
-			<div class="img-container">
-				<img src="/democracy.svg" alt="democracy symbol" />
-			</div>
-			<hr />
-			<div class="text">
-				<p>
-					Pour atteindre cet objectif, nous pensons que le développement de l'intelligence
-					artificielle doit devenir plus démocratique.
-				</p>
-
-				<p>
-					Aujourd'hui, cette technologie est principalement développée par un nombre très limité
-					d'acteurs privés (grandes entreprises technologiques, fonds d'investissement et quelques
-					laboratoires de recherche privé). Une telle concentration du pouvoir technologique soulève
-					une question fondamentale de légitimité démocratique.
-				</p>
-
-				<p>
-					Les personnes qui conçoivent ces systèmes ne reflètent qu'imparfaitement la diversité
-					démographique des sociétés dans lesquelles ils seront déployés. Les choix de conception,
-					les priorités de recherche et les orientations stratégiques sont donc souvent guidés par
-					des intérêts économiques ou géopolitiques, plutôt que par une réflexion collective sur
-					l'intérêt général.
-				</p>
-				<p>
-					Chez Demos IA, nous souhaitons réintroduire une dimension démocratique dans le
-					développement de l'intelligence artificielle. Nous sommes convaincus que l'intelligence
-					collective de millions de citoyens peut produire de meilleures décisions qu'un petit
-					nombre d'acteurs agissant seuls.
-				</p>
-			</div>
+<div class="container {$theme} reveal" id="democracy" use:reveal>
+	<h2>Pour une IA démocratique</h2>
+	<div class="text-img">
+		<div class="img-container">
+			<img src="/democracy.svg" alt="democracy symbol" />
 		</div>
-	{/if}
+		<hr />
+		<div class="text">
+			<p>
+				Pour atteindre cet objectif, nous pensons que le développement de l'intelligence
+				artificielle doit devenir plus démocratique.
+			</p>
+
+			<p>
+				Aujourd'hui, cette technologie est principalement développée par un nombre très limité
+				d'acteurs privés (grandes entreprises technologiques, fonds d'investissement etc...). Une
+				telle concentration du pouvoir technologique soulève une question fondamentale de légitimité
+				démocratique.
+			</p>
+
+			<p>
+				Les personnes qui conçoivent ces systèmes ne reflètent qu'imparfaitement la diversité
+				démographique des sociétés dans lesquelles ils seront déployés. Les choix de conception, les
+				priorités de recherche et les orientations stratégiques sont donc souvent guidés par des
+				intérêts économiques ou géopolitiques, plutôt que par une réflexion collective sur l'intérêt
+				général.
+			</p>
+			<p>
+				Chez Demos IA, nous souhaitons réintroduire une dimension démocratique dans le développement
+				de l'intelligence artificielle. Nous sommes convaincus que l'intelligence collective de
+				millions de citoyens peut produire de meilleures décisions qu'un petit nombre d'acteurs
+				agissant seuls.
+			</p>
+		</div>
+	</div>
 </div>
 
-<div class="container {$theme}" id="action-pincipal">
+<div class="container-txt {$theme} reveal" id="action-pincipal" use:reveal>
 	<h2>Nos principes d'action</h2>
 	<div class="text">
 		<p>
@@ -122,9 +96,11 @@
 		<p>Notre priorité est de poursuivre nos deux missions fondamentales :</p>
 		<ul>
 			<li>
-				faire en sorte que le développement de l'intelligence artificielle bénéficie à l'humanité
+				<a href="#public-interest"
+					>faire en sorte que le développement de l'intelligence artificielle bénéficie à l'humanité</a
+				>
 			</li>
-			<li>favoriser un développement de l'IA plus démocratique</li>
+			<li><a href="#democracy">favoriser un développement de l'IA plus démocratique</a></li>
 		</ul>
 
 		<p>
@@ -144,7 +120,7 @@
 	</div>
 </div>
 
-<div class="container {$theme}" id="your-actions">
+<div class="container-txt {$theme} reveal" id="your-actions" use:reveal>
 	<h2>Ce que nous voulons faire</h2>
 	<div class="text">
 		<p>
@@ -180,6 +156,36 @@
 		min-height: 100vh;
 		padding: 2rem;
 		box-sizing: border-box;
+		justify-content: center;
+		align-items: center;
+	}
+
+	li {
+		list-style: none;
+		margin-bottom: 1rem;
+	}
+
+	li::before {
+		content: '- ';
+		color: var(--futuristic-purple-pink);
+	}
+
+	a {
+		font-weight: bold;
+		font-size: 1.1rem;
+	}
+
+	p {
+		font-weight: bold;
+		font-size: 1.1rem;
+	}
+
+	.container-txt {
+		width: 100%;
+		padding: 2rem;
+		box-sizing: border-box;
+		justify-content: center;
+		align-items: center;
 	}
 	.text-img {
 		display: flex;
@@ -188,6 +194,20 @@
 		align-items: center;
 		height: 100%;
 		width: 100%;
+	}
+
+	.reveal {
+		opacity: 0;
+		transform: translateY(24px);
+		transition:
+			opacity 600ms ease,
+			transform 600ms ease;
+		will-change: opacity, transform;
+	}
+
+	.reveal.visible {
+		opacity: 1;
+		transform: translateY(0);
 	}
 
 	.img-container {
@@ -205,8 +225,6 @@
 
 	.text-img .text {
 		width: 45%;
-		font-weight: bold;
-		font-size: 1.1rem;
 	}
 
 	.text-img hr {
@@ -230,5 +248,26 @@
 
 	#public-interest.light {
 		background: linear-gradient(to bottom, black, rgba(255, 255, 255, 1) 2rem);
+	}
+
+	@media (max-width: 1000px) {
+		hr {
+			display: none;
+		}
+
+		h2 {
+			z-index: 100;
+		}
+
+		.text-img .text {
+			width: 100%;
+			z-index: 100;
+		}
+
+		.img-container {
+			width: 80%;
+			position: absolute;
+			opacity: 50%;
+		}
 	}
 </style>
