@@ -105,6 +105,8 @@
 		justify-content: space-between;
 		background: linear-gradient(to right, var(--futuristic-pink), var(--futuristic-purple) 33%);
 		position: sticky;
+		top: 0;
+		z-index: 100;
 		z-index: 100;
 	}
 

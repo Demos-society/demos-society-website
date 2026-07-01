@@ -33,6 +33,13 @@
 		{ code: 'ru', name: 'Русский' }
 	] as const;
 
+	$effect(() => {
+		if (!browser) return;
+
+		document.body.classList.remove('light', 'dark');
+		document.body.classList.add($theme);
+	});
+
 	console.log(getLocale());
 	console.log($theme);
 </script>
@@ -83,7 +90,7 @@
 </div>
 
 <style>
-	:global(body) {
+	:global(body.dark) {
 		background-color: black;
 		color: white;
 		transition:
@@ -91,7 +98,7 @@
 			color 0.3s;
 	}
 
-	:global(body.light-mode) {
+	:global(body.light) {
 		background-color: white;
 		color: black;
 	}
