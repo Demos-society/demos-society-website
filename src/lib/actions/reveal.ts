@@ -1,10 +1,8 @@
-// reveal.ts
 export function reveal(node: HTMLElement, options = { threshold: 0.2 }) {
-	let visible = false;
+	console.log('CREATE', node);
 
 	const observer = new IntersectionObserver(([entry]) => {
-		if (entry.isIntersecting && !visible) {
-			visible = true;
+		if (entry.isIntersecting) {
 			node.classList.add('visible');
 			observer.disconnect();
 		}
@@ -14,6 +12,7 @@ export function reveal(node: HTMLElement, options = { threshold: 0.2 }) {
 
 	return {
 		destroy() {
+			console.log('DESTROY', node);
 			observer.disconnect();
 		}
 	};

@@ -6,7 +6,7 @@
 
 <Slogan></Slogan>
 
-<div class="container {$theme} reveal" id="public-interest" use:reveal>
+<div class="container reveal "  id="public-interest" use:reveal>
 	<h2>Pour que l'IA soit bénéfique à l'humanité</h2>
 	<div class="text-img">
 		<div class="text">
@@ -48,7 +48,7 @@
 	</div>
 </div>
 
-<div class="container {$theme} reveal" id="democracy" use:reveal>
+<div class="container reveal {theme}" class:light={$theme === 'light'} class:dark={$theme === 'dark'}  id="democracy" use:reveal>
 	<h2>Pour une IA démocratique</h2>
 	<div class="text-img">
 		<div class="img-container">
@@ -85,7 +85,7 @@
 	</div>
 </div>
 
-<div class="container-txt {$theme} reveal" id="action-pincipal" use:reveal>
+<div class="container-txt reveal" id="action-pincipal" use:reveal>
 	<h2>Nos principes d'action</h2>
 	<div class="text">
 		<p>
@@ -120,7 +120,7 @@
 	</div>
 </div>
 
-<div class="container-txt {$theme} reveal" id="your-actions" use:reveal>
+<div class="container-txt reveal" id="your-actions" use:reveal>
 	<h2>Ce que nous voulons faire</h2>
 	<div class="text">
 		<p>
@@ -231,7 +231,7 @@
 		align-self: stretch;
 	}
 
-	.container.light {
+	/*.container.light {
 		background-color: white;
 		color: black;
 	}
@@ -239,7 +239,7 @@
 	.container.dark {
 		background-color: black;
 		color: white;
-	}
+	}*/
 
 	h2 {
 		text-align: center;

@@ -4,6 +4,7 @@
 	import '@fontsource-variable/exo-2';
 	import { browser } from '$app/environment';
 	import { theme } from '$lib/stores/theme';
+	import { onMount } from 'svelte';
 
 	let burgerMenuOpen = $state(false);
 
@@ -25,26 +26,22 @@
 		return () => media.removeEventListener('change', handleChange);
 	});
 
-	$effect(() => {
-		if (browser) {
-			const saved = localStorage.getItem('theme');
+	onMount(() => {
+	const saved = localStorage.getItem('theme');
 
-			const initial: 'light' | 'dark' =
-				saved === 'light' || saved === 'dark'
-					? saved
-					: window.matchMedia('(prefers-color-scheme: dark)').matches
-						? 'dark'
-						: 'light';
-			theme.set(initial);
-		}
+	theme.set(
+		saved === 'light' || saved === 'dark'
+			? saved
+			: window.matchMedia('(prefers-color-scheme: dark)').matches
+				? 'dark'
+				: 'light'
+	);
 
-		theme.subscribe((value) => {
-			if (!browser) return;
-			localStorage.setItem('theme', value);
-			document.documentElement.dataset.theme = value;
-		});
+	return theme.subscribe((value) => {
+		localStorage.setItem('theme', value);
+		document.documentElement.dataset.theme = value;
 	});
-
+});
 	let { children } = $props();
 </script>
 
@@ -83,10 +80,6 @@
 	:global(body) {
 		font-family: 'Exo 2 Variable', sans-serif;
 		margin: 0;
-	}
-
-	:global(a) {
-		color: var(--futuristic-purple-pink);
 	}
 
 	:global(*),
